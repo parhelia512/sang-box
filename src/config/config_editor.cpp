@@ -1,8 +1,6 @@
 #include "config_editor.h"
 #include <ui_config_editor.h>
 
-#include <QDir>
-#include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
@@ -12,6 +10,7 @@
 ConfigEditor::ConfigEditor(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ConfigEditor)
+    , m_configIO{nullptr}
 {
     ui->setupUi(this);
     resize(600, 450);
@@ -45,17 +44,15 @@ void ConfigEditor::openFile()
                                                     lastOpenedFilePath,
                                                     tr("JSON File (*.json)")
                                                     );
+    m_configIO = std::make_unique<ConfigIO>(filePath);
     if (!filePath.isEmpty()) {
-        QFile file(filePath);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString fileContent = m_configIO->openConfigFile();
+        if (fileContent.isEmpty()) {
             QMessageBox::critical(this, tr("Error"),
-                                 tr("Import config failed.")
-                                 );
+                                  tr("Import config failed.")
+                                  );
             return;
         }
-        QTextStream textStream(&file);
-        QString fileContent = textStream.readAll();
-        file.close();
         QString fileBaseName = QFileInfo(filePath).baseName();
         ui->titleEdit->setText(fileBaseName);
         ui->contentEdit->setPlainText(fileContent);
@@ -68,24 +65,21 @@ void ConfigEditor::openFile(int index, const QString &filePath, const QString &t
 {
     m_editMode = EditMode::EditConfig;
     m_configFileIndex = index;
-    m_configFilePath = filePath;
+    m_configIO = std::make_unique<ConfigIO>(filePath);
     if (!filePath.isEmpty()) {
-        QFile file(filePath);
-        if (!file.exists()) {
+        if (!m_configIO->fileConfigExists()) {
             QMessageBox::warning(this, tr("Warning"),
                                  tr("The configuration file does not exist or has been deleted.")
                                  );
             return;
         }
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString fileContent = m_configIO->openConfigFile();
+        if (fileContent.isEmpty()) {
             QMessageBox::critical(this, tr("Error"),
-                                 tr("Open config failed.")
-                                 );
+                                  tr("Open config failed.")
+                                  );
             return;
         }
-        QTextStream textStream(&file);
-        QString fileContent = textStream.readAll();
-        file.close();
         ui->titleEdit->setText(title);
         ui->contentEdit->setPlainText(fileContent);
         exec();
@@ -94,39 +88,29 @@ void ConfigEditor::openFile(int index, const QString &filePath, const QString &t
 
 void ConfigEditor::saveConfigFile(const QString &configContent)
 {
-    QString directory = QString(QCoreApplication::applicationDirPath() + "/config");
-    QDir dir;
-    // If the directory does not exist, create the directory
-    if (!dir.exists(directory)) {
-        dir.mkpath(directory);
+    switch (m_editMode) {
+    case EditMode::AddNewConfig:
+    case EditMode::ImportConfig:
+        m_configIO = std::make_unique<ConfigIO>();
+        break;
+    default:
+        break;
     }
+    m_configIO->saveConfigFile(configContent);
 
-    QString filePath;
-    if (m_editMode == EditMode::EditConfig) {
-        filePath = m_configFilePath;
-    } else {
-        filePath = QString(directory + "/" + generateFileName());
+    switch (m_editMode) {
+    case EditMode::AddNewConfig:
+    case EditMode::ImportConfig:
+        emit configFileSaved(QFileInfo(m_configIO->getConfigFilePath()).absoluteFilePath(),
+                             ui->titleEdit->text());
+        break;
+    case EditMode::EditConfig:
+        emit editedConfigFileSaved(m_configFileIndex,
+                                   m_configIO->getConfigFilePath(),
+                                   ui->titleEdit->text());
+    default:
+        break;
     }
-    QFile file(filePath);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream textStream(&file);
-        textStream << configContent;
-        file.close();
-    }
-
-    if (m_editMode == EditMode::EditConfig) {
-        emit editedConfigFileSaved(m_configFileIndex, filePath, ui->titleEdit->text());
-    } else {
-        emit configFileSaved(QFileInfo(file).absoluteFilePath(), ui->titleEdit->text());
-    }
-}
-
-QString ConfigEditor::generateFileName()
-{
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString timestamp = QString::number(currentDateTime.toMSecsSinceEpoch());
-    QString fileName = "config_" + timestamp + ".json";
-    return fileName;
 }
 
 void ConfigEditor::on_saveButton_clicked()

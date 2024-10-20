@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+#include "config_io.h"
+#include <memory>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class ConfigEditor;
@@ -12,6 +15,8 @@ QT_END_NAMESPACE
 class ConfigEditor : public QDialog
 {
     Q_OBJECT
+
+    using ConfigIOUPtr = std::unique_ptr<ConfigIO>;
 
 public:
     explicit ConfigEditor(QWidget *parent = nullptr);
@@ -33,13 +38,11 @@ private:
     enum class EditMode {ImportConfig, AddNewConfig, EditConfig};
 
     void saveConfigFile(const QString &configContent);
-    // Use timestamp as saved file name
-    QString generateFileName();
 
     Ui::ConfigEditor *ui;
     EditMode m_editMode;
     int m_configFileIndex;
-    QString m_configFilePath;
+    ConfigIOUPtr m_configIO;
 };
 
 #endif // CONFIG_EDITOR_H
