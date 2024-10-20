@@ -12,14 +12,14 @@ public:
     QString lastOpenedFilePath();
     void setLastOpenedFilePath(const QString &filePath);
 
-    int configIndex();
+    int configIndex() const;
     void setConfigIndex(int index);
 
-    bool autoRun();
+    bool autoRun() const;
     void setAutoRun(bool checked);
     void setAppAutoRun(bool enabled);
 
-    bool runAsAdmin();
+    bool runAsAdmin() const;
     void setRunAsAdmin(bool checked);
 
     void removeConfig();

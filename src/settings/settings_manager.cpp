@@ -20,7 +20,7 @@ void SettingsManager::setLastOpenedFilePath(const QString &filePath)
     settings.setValue("lastOpenedFilePath", filePath);
 }
 
-int SettingsManager::configIndex()
+int SettingsManager::configIndex() const
 {
     QSettings settings;
     return settings.value("configIndex").toInt();
@@ -32,7 +32,7 @@ void SettingsManager::setConfigIndex(int index)
     settings.setValue("configIndex", index);
 }
 
-bool SettingsManager::autoRun()
+bool SettingsManager::autoRun() const
 {
     QSettings settings;
     return settings.value("autoRun", false).toBool();
@@ -49,7 +49,7 @@ void SettingsManager::setAppAutoRun(bool enabled)
     QString appName = QCoreApplication::applicationName();
     QString appPath = QCoreApplication::applicationFilePath();
     QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-                              QSettings::NativeFormat);
+                       QSettings::NativeFormat);
 
     if (enabled == true) {
         settings.setValue(appName, "\"" + QDir::toNativeSeparators(appPath) + "\" /autorun");
@@ -58,7 +58,7 @@ void SettingsManager::setAppAutoRun(bool enabled)
     }
 }
 
-bool SettingsManager::runAsAdmin()
+bool SettingsManager::runAsAdmin() const
 {
     QSettings settings;
     return settings.value("runAsAdmin", false).toBool();
