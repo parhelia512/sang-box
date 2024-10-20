@@ -3,6 +3,7 @@ qt_add_library(config STATIC
     config_editor.cpp
     config_editor.ui
     config_manager.cpp
+    config_io.cpp
 )
 target_link_libraries(config PRIVATE
     Qt6::Widgets
