@@ -1,6 +1,7 @@
 #include "main_window.h"
 
 #include <QApplication>
+#include <QQmlApplicationEngine>
 #include <QLocale>
 #include <QMessageBox>
 #include <QSharedMemory>
@@ -58,6 +59,15 @@ int main(int argc, char *argv[])
         }
     }
     app.installTranslator(&translator);
+
+    QQmlApplicationEngine engine;
+    QObject::connect(
+        &engine,
+        &QQmlApplicationEngine::objectCreationFailed,
+        &app,
+        []() { QCoreApplication::exit(-1); },
+        Qt::QueuedConnection);
+    engine.loadFromModule("QSingBox", "Main");
 
     MainWindow mainWindow;
     if (privilegeManager.isRunningAsAdmin()) {

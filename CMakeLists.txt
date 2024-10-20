@@ -5,7 +5,7 @@ project(qsing-box VERSION 1.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Quick LinguistTools)
 qt_standard_project_setup()
 
 add_subdirectory(src)
@@ -26,12 +26,20 @@ qt_add_executable(qsing-box
     resources/app.rc
 )
 
+qt_add_qml_module(qsing-box
+    URI QSingBox
+    VERSION 1.0
+    QML_FILES
+        src/Main.qml
+)
+
 target_include_directories(qsing-box PRIVATE
     include
 )
 
 target_link_libraries(qsing-box PRIVATE
     Qt6::Widgets
+    Qt6::Quick
     config
     proxy
     settings
