@@ -5,7 +5,7 @@ project(qsing-box VERSION 1.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Quick LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Quick QuickControls2 LinguistTools)
 qt_standard_project_setup()
 
 add_subdirectory(src)
@@ -40,6 +40,8 @@ target_include_directories(qsing-box PRIVATE
 target_link_libraries(qsing-box PRIVATE
     Qt6::Widgets
     Qt6::Quick
+    Qt6::QuickControls2
+    MMaterialLibplugin
     config
     proxy
     settings
@@ -90,3 +92,9 @@ add_definitions(-DPROJECT_VERSION="${PROJECT_VERSION}")
 add_definitions(-DBUILD_TIME="${BUILD_TIME}")
 add_definitions(-DCOMPILER_ID="${CMAKE_CXX_COMPILER_ID}")
 add_definitions(-DCOMPILER_VERSION="${CMAKE_CXX_COMPILER_VERSION}")
+
+install(TARGETS qsing-box
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
