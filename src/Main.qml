@@ -8,4 +8,8 @@ Window {
 	visible: true
 	color: Theme.background.main
 	title: qsTr("Hello World")
+
+	MainWindowView {
+		anchors.fill: parent
+	}
 }

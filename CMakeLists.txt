@@ -31,6 +31,7 @@ qt_add_qml_module(qsing-box
     VERSION 1.0
     QML_FILES
         src/Main.qml
+        src/MainWindowView.qml
 )
 
 target_include_directories(qsing-box PRIVATE
