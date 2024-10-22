@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Quick QuickControls2 LinguistTools)
 qt_standard_project_setup()
 
+set(QML_IMPORT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/third_party/material_qt/" ${CMAKE_BINARY_DIR}/imports CACHE STRING "MMaterial imports" FORCE)
+
+add_subdirectory(src/third_party/material_qt/MMaterial ./MMaterial)
+
 add_subdirectory(src)
 
 set(qsing-box_sources
