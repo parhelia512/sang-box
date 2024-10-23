@@ -69,6 +69,7 @@ MainWindow::~MainWindow()
 {
     stopProxy();
     delete ui;
+    delete m_versionLabel;
 }
 
 void MainWindow::startProxy()
