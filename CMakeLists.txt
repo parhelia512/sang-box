@@ -36,6 +36,8 @@ qt_add_qml_module(qsing-box
     QML_FILES
         src/Main.qml
         src/MainWindowView.qml
+        src/MenuButton.qml
+        src/ControlMenu.qml
 )
 
 target_include_directories(qsing-box PRIVATE
