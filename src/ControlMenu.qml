@@ -47,8 +47,8 @@ Rectangle {
 
     Label {
         id: label
-        property string labelText: "Profiles"
-        text: qsTr(labelText)
+        property string labelText: qsTr("Profiles")
+        text: labelText
 
         anchors.top: parent.top
         anchors.left: parent.left

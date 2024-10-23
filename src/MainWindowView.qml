@@ -41,7 +41,7 @@ Rectangle {
                 spacing: 100
 
                 ControlMenu {
-                    labelText: "Profiles"
+                    labelText: qsTr("Profiles")
                     labelLeftMargin: 23
 
                     Layout.alignment: Qt.AlignLeft
@@ -49,7 +49,7 @@ Rectangle {
 
 
                 ControlMenu {
-                    labelText: "Stats"
+                    labelText: qsTr("Stats")
                     labelLeftMargin: 36
 
                     Layout.alignment: Qt.AlignRight
@@ -57,7 +57,7 @@ Rectangle {
             }
 
             ControlMenu {
-                labelText: "Log"
+                labelText: qsTr("Log")
                 labelLeftMargin: 36
 
                 Layout.fillWidth: true
@@ -79,8 +79,8 @@ Rectangle {
 
                 Text  {
                     text: root.currentWorkState === MainWindowView.WorkState.Start ?
-                                qsTr("The service is running. The log is active.") :
-                                qsTr("The service has been stopped. The log is inactive.")
+                              qsTr("The service is running. The log is active.") :
+                              qsTr("The service has been stopped. The log is inactive.")
                     wrapMode: Text.WordWrap
                     width: parent.width - 15
 
@@ -112,7 +112,7 @@ Rectangle {
                 spacing: 100
 
                 ControlMenu {
-                    labelText: "Settings"
+                    labelText: qsTr("Settings")
                     labelLeftMargin: 20
 
                     Layout.alignment: Qt.AlignLeft
@@ -120,7 +120,7 @@ Rectangle {
 
 
                 ControlMenu {
-                    labelText: "Proxied apps"
+                    labelText: qsTr("Proxied apps")
                     labelLeftMargin: 10
 
                     Layout.alignment: Qt.AlignRight
@@ -128,7 +128,7 @@ Rectangle {
             }
 
             ControlMenu {
-                labelText: "Domain routing"
+                labelText: qsTr("Domain routing")
                 labelLeftMargin: 10
 
                 Layout.fillWidth: true
@@ -140,7 +140,7 @@ Rectangle {
                 MSwitch {
                     accent: Theme.primary
                     text: qsTr("Blacklist")
-                    label.color: color("black")
+                    label.color: "black"
                     size: Size.Grade.M
                     anchors.left: parent.verticalLine.right
                     anchors.top: parent.top
@@ -197,8 +197,8 @@ Rectangle {
 
             onClicked: {
                 root.currentWorkState = (root.currentWorkState === MainWindowView.WorkState.Stop) ?
-                    MainWindowView.WorkState.Start :
-                    MainWindowView.WorkState.Stop
+                            MainWindowView.WorkState.Start :
+                            MainWindowView.WorkState.Stop
             }
         }
     }
