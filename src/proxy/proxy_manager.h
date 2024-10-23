@@ -24,10 +24,6 @@ signals:
     void proxyProcessStateChanged(int newState);
     void proxyProcessReadyReadStandardError();
 
-private slots:
-    void emitProxyProcessStateChanged(int newState);
-    void emitProxyProcessReadyReadStandardError();
-
 private:
     QProcess *m_proxyProcess = nullptr;
     QString m_configFilePath;

@@ -35,10 +35,10 @@ void ProxyManager::startProxy()
             arguments << "run" << "-c" << m_configFilePath << "-D" << QCoreApplication::applicationDirPath();
             m_proxyProcess->start(program, arguments);
             connect(m_proxyProcess, &QProcess::stateChanged, this,
-                    &ProxyManager::emitProxyProcessStateChanged);
+                    &ProxyManager::proxyProcessStateChanged);
             connect(m_proxyProcess, &QProcess::readyReadStandardError, this,
-                    &ProxyManager::emitProxyProcessReadyReadStandardError);
-            emitProxyProcessStateChanged(QProcess::Running);
+                    &ProxyManager::proxyProcessReadyReadStandardError);
+            emit proxyProcessStateChanged(QProcess::Running);
         }
     }
 }
@@ -75,15 +75,4 @@ int ProxyManager::proxyProcessState() const
 void ProxyManager::setConfigFilePath(const QString &filePath)
 {
     m_configFilePath = filePath;
-}
-
-void ProxyManager::emitProxyProcessStateChanged(int newState)
-{
-
-    emit proxyProcessStateChanged(newState);
-}
-
-void ProxyManager::emitProxyProcessReadyReadStandardError()
-{
-    emit proxyProcessReadyReadStandardError();
 }
