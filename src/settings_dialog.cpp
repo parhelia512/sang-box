@@ -7,7 +7,7 @@
 #include "settings_manager.h"
 #include "task_scheduler.h"
 
-SettingsDialog::SettingsDialog(ConfigManager *configManager, QWidget *parent)
+SettingsDialog::SettingsDialog(ConfigManagerPtr configManager, QWidget *parent)
     : m_configManager(configManager)
     , QDialog(parent)
     , ui(new Ui::SettingsDialog)

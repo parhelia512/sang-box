@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QProcess>
 
+#include <memory>
+
 #include "config_manager.h"
 #include "proxy_manager.h"
 #include "tray_icon.h"
@@ -19,6 +21,10 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    using TrayIconUPtr = std::unique_ptr<TrayIcon>;
+    using ConfigManagerPtr = std::shared_ptr<ConfigManager>;
+    using ProxyManagerUPtr = std::unique_ptr<ProxyManager>;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -62,9 +68,9 @@ private:
     Ui::MainWindow *ui;
     QLabel *m_versionLabel;
 
-    TrayIcon *m_trayIcon;
-    ConfigManager *m_configManager;
-    ProxyManager *m_proxyManager;
+    TrayIconUPtr m_trayIcon;
+    ConfigManagerPtr m_configManager;
+    ProxyManagerUPtr m_proxyManager;
 };
 
 #endif // MAIN_WINDOW_H

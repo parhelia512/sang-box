@@ -13,8 +13,10 @@ class SettingsDialog : public QDialog
 {
     Q_OBJECT
 
+    using ConfigManagerPtr = std::shared_ptr<ConfigManager>;
+
 public:
-    explicit SettingsDialog(ConfigManager *configManager, QWidget *parent = nullptr);
+    explicit SettingsDialog(ConfigManagerPtr configManager, QWidget *parent = nullptr);
     ~SettingsDialog();
 
 private slots:
@@ -24,7 +26,7 @@ private slots:
 
 private:
     Ui::SettingsDialog *ui;
-    ConfigManager *m_configManager;
+    ConfigManagerPtr m_configManager;
     bool m_autoRun;
     bool m_runAsAdmin;
 };

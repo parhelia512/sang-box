@@ -14,6 +14,9 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_trayIcon(std::make_unique<TrayIcon>(this))
+    , m_configManager(std::make_shared<ConfigManager>(this))
+    , m_proxyManager(std::make_unique<ProxyManager>(this))
 {
     ui->setupUi(this);
 
@@ -33,16 +36,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->outputEdit->setReadOnly(true);
     ui->outputEdit->setMaximumBlockCount(1000);
 
-    m_proxyManager = new ProxyManager(this);
-    connect(m_proxyManager, &ProxyManager::proxyProcessStateChanged, this,
+    connect(m_proxyManager.get(), &ProxyManager::proxyProcessStateChanged, this,
             &MainWindow::changeProxy);
-    connect(m_proxyManager, &ProxyManager::proxyProcessReadyReadStandardError, this,
+    connect(m_proxyManager.get(), &ProxyManager::proxyProcessReadyReadStandardError, this,
             &MainWindow::displayProxyOutput);
 
-    m_configManager = new ConfigManager(this);
-    connect(m_configManager, &ConfigManager::configUpdated, this,
+    connect(m_configManager.get(), &ConfigManager::configUpdated, this,
             &MainWindow::updateConfigList);
-    connect(m_configManager, &ConfigManager::configChanged, this,
+    connect(m_configManager.get(), &ConfigManager::configChanged, this,
             &MainWindow::changeSelectedConfig);
 
     ui->configNameLabel->setWordWrap(true);
@@ -56,12 +57,11 @@ MainWindow::MainWindow(QWidget *parent)
         ui->deleteButton->setEnabled(false);
     }
 
-    m_trayIcon = new TrayIcon(this);
-    connect(m_trayIcon, &TrayIcon::disableProxyActionTriggered, this, &MainWindow::stopProxy);
-    connect(m_trayIcon, &TrayIcon::enableProxyActionTriggered, this, &MainWindow::startProxy);
-    connect(m_trayIcon, &TrayIcon::restoreActionTriggered, this, &QWidget::showNormal);
-    connect(m_trayIcon, &TrayIcon::iconActivated, this, &MainWindow::showMainWindow);
-    connect(this, &MainWindow::proxyChanged, m_trayIcon, &TrayIcon::setMenuEnabled);
+    connect(m_trayIcon.get(), &TrayIcon::disableProxyActionTriggered, this, &MainWindow::stopProxy);
+    connect(m_trayIcon.get(), &TrayIcon::enableProxyActionTriggered, this, &MainWindow::startProxy);
+    connect(m_trayIcon.get(), &TrayIcon::restoreActionTriggered, this, &QWidget::showNormal);
+    connect(m_trayIcon.get(), &TrayIcon::iconActivated, this, &MainWindow::showMainWindow);
+    connect(this, &MainWindow::proxyChanged, m_trayIcon.get(), &TrayIcon::setMenuEnabled);
     m_trayIcon->show();
 }
 
