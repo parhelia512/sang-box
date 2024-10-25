@@ -26,6 +26,13 @@ QVariant ConfigListModel::data(const QModelIndex &index, int role) const
     }
 }
 
+void ConfigListModel::switchConfig(int index)
+{
+    if (index >= 0) {
+        m_configManager->switchConfig(index);
+    }
+}
+
 QHash<int, QByteArray> ConfigListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
