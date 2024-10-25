@@ -15,6 +15,7 @@ Rectangle {
     property int lineHeight: 30
     property int lineThickness: 1
 
+    property alias label: label
     property alias labelText: label.labelText
     property alias labelLeftMargin: label.anchors.leftMargin
     property alias labelTopMargin: label.anchors.topMargin
@@ -49,6 +50,7 @@ Rectangle {
         id: label
         property string labelText: qsTr("Profiles")
         text: labelText
+        font.pixelSize: 16;
 
         anchors.top: parent.top
         anchors.left: parent.left
