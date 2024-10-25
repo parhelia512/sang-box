@@ -45,12 +45,107 @@ Rectangle {
                     labelLeftMargin: 23
 
                     Layout.alignment: Qt.AlignLeft
+
+                    ScrollView {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        anchors.top: parent.label.bottom
+                        anchors.topMargin: 16
+                        anchors.right: parent.right
+                        anchors.rightMargin: 6
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 16
+                        anchors.left: parent.left
+                        anchors.leftMargin: 16
+
+                        ColumnLayout {
+                            spacing: 15
+                            // padding: 5
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+
+                            MRadioButton {
+                                accent: Theme.primary
+                                implicitHeight: Size.pixel16
+                                label.color: "black"
+                                text: "Profile 1"
+                            }
+                        }
+                    }
                 }
 
 
                 ControlMenu {
                     labelText: qsTr("Stats")
-                    labelLeftMargin: 36
+                    labelLeftMargin: 31
 
                     Layout.alignment: Qt.AlignRight
                 }
@@ -70,11 +165,12 @@ Rectangle {
                     accent: Theme.primary
                     text: qsTr("Auto Scroll")
                     label.color: "black"
+                    label.font.pixelSize: 16;
                     size: Size.Grade.M
-                    anchors.left: parent.verticalLine.right
                     anchors.top: parent.top
-                    anchors.leftMargin: 58.5
                     anchors.topMargin: 5.5
+                    anchors.left: parent.verticalLine.right
+                    anchors.leftMargin: 58.5 
                 }
 
                 Text  {
@@ -85,9 +181,9 @@ Rectangle {
                     width: parent.width - 15
 
                     anchors.top: parent.horizontalLine.bottom
+                    anchors.topMargin: 5
                     anchors.left: parent.left
                     anchors.leftMargin: 15
-                    anchors.topMargin: 5
                 }
             }
         }
@@ -116,12 +212,91 @@ Rectangle {
                     labelLeftMargin: 20
 
                     Layout.alignment: Qt.AlignLeft
+
+                    ColumnLayout {
+                        anchors.top: parent.horizontalLine.bottom
+                        anchors.topMargin: 15
+                        anchors.right: parent.right
+                        anchors.rightMargin: 15
+                        anchors.left: parent.left
+                        anchors.leftMargin: 15
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 15
+
+                        spacing: 15
+
+                        RowLayout {
+                            MCheckbox {
+                                id: startOnBootCheck
+                                accent: Theme.primary
+
+                                implicitHeight: Size.pixel22
+                                implicitWidth: Size.pixel22
+                            }
+
+                            Label { text: qsTr("Start on boot"); font.pixelSize: 16; Layout.leftMargin: 12 }
+                        }
+
+                        RowLayout {
+                            MCheckbox {
+                                id: autoUpdatesCheck
+                                accent: Theme.primary
+
+                                implicitHeight: Size.pixel22
+                                implicitWidth: Size.pixel22
+                            }
+
+                            Label { text: qsTr("Automatic updates"); font.pixelSize: 16; Layout.leftMargin: 12 }
+                        }
+
+                        RowLayout {
+                            MCheckbox {
+                                id: preReleaseCheck
+                                accent: Theme.primary
+
+                                implicitHeight: Size.pixel22
+                                implicitWidth: Size.pixel22
+                            }
+
+                            Label { text: qsTr("Pre-release"); font.pixelSize: 16; Layout.leftMargin: 12 }
+                        }
+
+                        ColumnLayout {
+                            Layout.topMargin: 10
+                            spacing: 5
+
+                            RowLayout {
+                                Label { text: qsTr("App version:"); font.pixelSize: 16; Layout.leftMargin: 3 }
+                                Label { text: qsTr("0.1"); font.pixelSize: 16; color: "green"; Layout.leftMargin: 5 }
+                            }
+
+                            RowLayout {
+                                Label { text: qsTr("Core version:"); font.pixelSize: 16; Layout.leftMargin: 3 }
+                                Label { text: qsTr("1.10.0"); font.pixelSize: 16; color: "red"; Layout.leftMargin: 5 }
+                            }
+                        }
+
+                        MFabButton {
+                            accent: Theme.primary
+                            radius: 100
+                            Layout.preferredWidth: 112
+                            Layout.preferredHeight: 40
+                            Layout.topMargin: 4
+                            Layout.alignment: Qt.AlignRight
+
+                            leftIcon.iconData: Icons.light.download
+                            leftIcon.size: Size.pixel20
+
+                            text: qsTr("Update")
+                        }
+                    }
                 }
 
 
                 ControlMenu {
                     labelText: qsTr("Proxied apps")
                     labelLeftMargin: 10
+                    verticalLineLeftMargin: 114.5
 
                     Layout.alignment: Qt.AlignRight
                 }
@@ -141,6 +316,7 @@ Rectangle {
                     accent: Theme.primary
                     text: qsTr("Blacklist")
                     label.color: "black"
+                    label.font.pixelSize: 16;
                     size: Size.Grade.M
                     anchors.left: parent.verticalLine.right
                     anchors.top: parent.top
