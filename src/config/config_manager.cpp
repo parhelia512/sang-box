@@ -117,6 +117,13 @@ QString ConfigManager::configFilePath() const
     }
 }
 
+QString ConfigManager::configName(int index) const
+{
+    if (index < 0 || index > m_configList.length())
+        return QString();
+    return m_configList.at(index).name();
+}
+
 QString ConfigManager::configName() const
 {
     if (!m_configList.isEmpty()){

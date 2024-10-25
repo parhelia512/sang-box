@@ -21,6 +21,7 @@ public:
 
     QStringList configNames() const;
     QString configFilePath() const;
+    QString configName(int index) const;
     QString configName() const;
     int configIndex() const;
     int configCount() const;
