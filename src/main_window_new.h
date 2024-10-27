@@ -14,6 +14,7 @@ class MainWindowNew : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(ConfigListModel* configListModel READ configListModel NOTIFY configListModelChanged)
+    Q_PROPERTY(bool runnigState READ runnigState NOTIFY runningStateChanged)
 
     using ConfigManagerPtr = std::shared_ptr<ConfigManager>;
     using ConfigListModelPtr = std::shared_ptr<ConfigListModel>;
@@ -29,8 +30,15 @@ public slots:
     void stopProxy();
 
 signals:
-    void proxyChanged(bool enabled);
     void configListModelChanged();
+    void runningStateChanged();
+
+private:
+    bool runnigState() const;
+
+private slots:
+    void changeSelectedConfig();
+    void displayProxyOutput();
 
 private:
     ConfigManagerPtr m_configManager;
