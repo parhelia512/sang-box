@@ -1,7 +1,11 @@
 #include "main_window.h"
+#include "main_window_new.h"
+
+#define USE_WIDGETS 0
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QLocale>
 #include <QMessageBox>
 #include <QSharedMemory>
@@ -60,6 +64,15 @@ int main(int argc, char *argv[])
     }
     app.installTranslator(&translator);
 
+#if USE_WIDGETS == 1
+    MainWindow mainWindow;
+    if (privilegeManager.isRunningAsAdmin()) {
+        QString title = mainWindow.windowTitle() + QObject::tr(" (Administrator)");
+        mainWindow.setWindowTitle(title);
+    }
+#else
+    using MainWindowUPtr = std::unique_ptr<MainWindowNew>;
+    MainWindowUPtr mainWindow = std::make_unique<MainWindowNew>();
     QQmlApplicationEngine engine;
     QObject::connect(
         &engine,
@@ -67,13 +80,11 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("QSingBox", "Main");
 
-    MainWindow mainWindow;
-    if (privilegeManager.isRunningAsAdmin()) {
-        QString title = mainWindow.windowTitle() + QObject::tr(" (Administrator)");
-        mainWindow.setWindowTitle(title);
-    }
+    engine.rootContext()->setContextProperty("mainWindow", mainWindow.get());
+
+    engine.loadFromModule("QSingBox", "Main");
+#endif
 
     bool isAutorun = false;
     for (int i = 1; i < argc; ++i) {
@@ -82,11 +93,19 @@ int main(int argc, char *argv[])
             break;
         }
     }
+#if USE_WIDGETS == 1
     if (isAutorun) {
         QTimer::singleShot(3000, &mainWindow, &MainWindow::startProxy);
     } else {
         mainWindow.show();
     }
+#else
+    if (isAutorun) {
+        QTimer::singleShot(3000, mainWindow.get(), &MainWindowNew::startProxy);
+    } else {
+        //mainWindow.show();
+    }
+#endif
 
     return app.exec();
 }
