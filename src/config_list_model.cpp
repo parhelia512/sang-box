@@ -34,6 +34,8 @@ void ConfigListModel::switchConfig(int index)
     if (index >= 0) {
         m_configManager->switchConfig(index);
     }
+    const QModelIndex modelIndex = this->index(index, 0);
+    emit dataChanged(modelIndex, modelIndex);
 }
 
 QHash<int, QByteArray> ConfigListModel::roleNames() const
