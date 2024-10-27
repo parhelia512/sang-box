@@ -68,6 +68,10 @@ Rectangle {
                                 implicitHeight: Size.pixel16
                                 label.color: "black"
                                 text: model.name
+                                checked: model.selected
+                                onClicked: {
+                                    mainWindow.configListModel.switchConfig(index)
+                                }
                             }
                         }
                     }
@@ -288,24 +292,24 @@ Rectangle {
         }
 
         MFabButton {
-            accent: root.currentWorkState === MainWindowView.WorkState.Stop ?
-                        Theme.secondary :
-                        Theme.primary
+            accent: mainWindow.runnigState ?
+                        Theme.primary :
+                        Theme.secondary
             radius: 28
             Layout.preferredWidth: 80
             Layout.preferredHeight: 80
             Layout.topMargin: 209
             Layout.alignment: Qt.AlignHCenter
 
-            leftIcon.iconData: root.currentWorkState === MainWindowView.WorkState.Stop ?
-                                   Icons.light.playArrow :
-                                   Icons.light.pause
+            leftIcon.iconData: mainWindow.runnigState ?
+                                   Icons.light.pause :
+                                   Icons.light.playArrow
             leftIcon.size: Size.pixel64
 
             onClicked: {
-                root.currentWorkState = (root.currentWorkState === MainWindowView.WorkState.Stop) ?
-                            MainWindowView.WorkState.Start :
-                            MainWindowView.WorkState.Stop
+                mainWindow.runnigState ?
+                    mainWindow.stopProxy() :
+                    mainWindow.startProxy()
             }
         }
     }
