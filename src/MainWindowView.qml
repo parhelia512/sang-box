@@ -58,85 +58,16 @@ Rectangle {
                         anchors.left: parent.left
                         anchors.leftMargin: 16
 
-                        ColumnLayout {
+                        ListView {
+                            anchors.fill: parent
+                            model: mainWindow.configListModel
                             spacing: 15
-                            // padding: 5
 
-                            MRadioButton {
+                            delegate: MRadioButton {
                                 accent: Theme.primary
                                 implicitHeight: Size.pixel16
                                 label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
-                            }
-
-                            MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: "Profile 1"
+                                text: model.name
                             }
                         }
                     }
