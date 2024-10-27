@@ -12,7 +12,8 @@ class ConfigListModel : public QAbstractItemModel
     using ConfigManagerPtr = std::shared_ptr<ConfigManager>;
 
     enum ConfigRoles {
-        NameRole = Qt::UserRole + 1
+        NameRole = Qt::UserRole + 1,
+        SelectedRole,
     };
 
 public:

@@ -20,6 +20,9 @@ QVariant ConfigListModel::data(const QModelIndex &index, int role) const
     case NameRole:
         return m_configManager->configName(index.row());
         break;
+    case SelectedRole:
+        return m_configManager->configIndex() == index.row();
+        break;
     default:
         return QVariant();
         break;
