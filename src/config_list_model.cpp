@@ -3,7 +3,12 @@
 ConfigListModel::ConfigListModel(ConfigManagerPtr configManager)
     : QAbstractItemModel()
     , m_configManager(configManager)
-{}
+{
+    QObject::connect(m_configManager.get(), &ConfigManager::configChanged,
+                     this, &ConfigListModel::processChanges);
+    QObject::connect(m_configManager.get(), &ConfigManager::configUpdated,
+                     this, &ConfigListModel::processChanges);
+}
 
 int ConfigListModel::rowCount(const QModelIndex &parent) const
 {
@@ -53,6 +58,13 @@ void ConfigListModel::switchConfig(int index)
     }
     const QModelIndex modelIndex = this->index(index, 0);
     emit dataChanged(modelIndex, modelIndex);
+}
+
+void ConfigListModel::processChanges()
+{
+    const QModelIndex beginIndex = this->index(0, 0);
+    const QModelIndex endIndex = this->index(rowCount() - 1, 0);
+    emit dataChanged(beginIndex, endIndex);
 }
 
 QHash<int, QByteArray> ConfigListModel::roleNames() const
