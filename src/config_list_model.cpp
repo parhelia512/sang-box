@@ -59,5 +59,6 @@ QHash<int, QByteArray> ConfigListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
+    roles[SelectedRole] = "selected";
     return roles;
 }
