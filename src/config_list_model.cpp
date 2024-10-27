@@ -11,6 +11,13 @@ int ConfigListModel::rowCount(const QModelIndex &parent) const
     return m_configManager->configCount();
 }
 
+
+int ConfigListModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return 1;
+}
+
 QVariant ConfigListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_configManager->configCount())
@@ -27,6 +34,16 @@ QVariant ConfigListModel::data(const QModelIndex &index, int role) const
         return QVariant();
         break;
     }
+}
+
+QModelIndex ConfigListModel::index(int row, int column, const QModelIndex &parent) const
+{
+    return createIndex(row, column, nullptr);
+}
+
+QModelIndex ConfigListModel::parent(const QModelIndex &child) const
+{
+    return QModelIndex();
 }
 
 void ConfigListModel::switchConfig(int index)
