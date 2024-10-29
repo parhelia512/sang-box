@@ -32,7 +32,7 @@ void ProxyManager::startProxy()
                                  );
         } else {
             QStringList arguments;
-            arguments << "run" << "-c" << m_configFilePath << "-D" << QCoreApplication::applicationDirPath();
+            arguments << "run" << "-c" << m_configFilePath << "--disable-color" << "-D" << QCoreApplication::applicationDirPath();
             m_proxyProcess->start(program, arguments);
             connect(m_proxyProcess, &QProcess::stateChanged, this,
                     &ProxyManager::proxyProcessStateChanged);
