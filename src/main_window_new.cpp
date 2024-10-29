@@ -71,6 +71,8 @@ void MainWindowNew::updateProxyOutput()
         const auto endPos = match.capturedStart(0);
         outputText = outputText.left(endPos);
     }
-    m_proxyOutput += outputText + "<br/>";
+    if (!m_proxyOutput.isEmpty())
+        m_proxyOutput += "<br>";
+    m_proxyOutput += outputText;
     emit proxyOutputChanged();
 }
