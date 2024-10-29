@@ -109,9 +109,7 @@ Rectangle {
                 }
 
                 Text  {
-                    text: root.currentWorkState === MainWindowView.WorkState.Start ?
-                              qsTr("The service is running. The log is active.") :
-                              qsTr("The service has been stopped. The log is inactive.")
+                    text: mainWindow.proxyOutput
                     wrapMode: Text.WordWrap
                     width: parent.width - 15
 
