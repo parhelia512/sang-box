@@ -63,14 +63,28 @@ Rectangle {
                             model: mainWindow.configListModel
                             spacing: 15
 
-                            delegate: MRadioButton {
-                                accent: Theme.primary
-                                implicitHeight: Size.pixel16
-                                label.color: "black"
-                                text: model.name
-                                checked: model.selected
-                                onClicked: {
-                                    mainWindow.configListModel.switchConfig(index)
+                            delegate: RowLayout {
+                                width: parent.width
+
+                                MRadioButton {
+                                    accent: Theme.primary
+                                    implicitHeight: Size.pixel16
+                                    label.color: "black"
+                                    text: model.name
+                                    checked: model.selected
+                                    onClicked: {
+                                        mainWindow.configListModel.switchConfig(index)
+                                    }
+                                }
+
+                                Item {
+                                    Layout.fillWidth: true
+                                }
+
+                                Rectangle {
+                                    width: 4
+                                    height: 16
+                                    color: "red"
                                 }
                             }
                         }
