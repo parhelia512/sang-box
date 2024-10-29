@@ -108,15 +108,19 @@ Rectangle {
                     anchors.leftMargin: 58.5 
                 }
 
-                Text  {
-                    text: mainWindow.proxyOutput
-                    wrapMode: Text.WordWrap
-                    width: parent.width - 15
-
+                ScrollView {
                     anchors.top: parent.horizontalLine.bottom
+                    anchors.bottom: parent.bottom
                     anchors.topMargin: 5
                     anchors.left: parent.left
                     anchors.leftMargin: 15
+
+                    width: parent.width - 15
+
+                    Text {
+                        text: mainWindow.proxyOutput
+                        wrapMode: Text.WordWrap
+                    }
                 }
             }
         }
