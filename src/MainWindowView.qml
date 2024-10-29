@@ -116,9 +116,11 @@ Rectangle {
                     anchors.leftMargin: 15
 
                     width: parent.width - 15
+                    contentWidth: width
 
                     Text {
                         text: mainWindow.proxyOutput
+                        width: parent.width
                         wrapMode: Text.WordWrap
                     }
                 }
