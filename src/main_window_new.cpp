@@ -21,11 +21,6 @@ MainWindowNew::MainWindowNew(QObject *parent)
             this, &MainWindowNew::updateProxyOutput);
 }
 
-ConfigListModel* MainWindowNew::configListModel() const
-{
-    return m_configListModel.get();
-}
-
 void MainWindowNew::startProxy()
 {
     m_proxyManager->startProxy();
@@ -34,6 +29,11 @@ void MainWindowNew::startProxy()
 void MainWindowNew::stopProxy()
 {
     m_proxyManager->stopProxy();
+}
+
+ConfigListModel* MainWindowNew::configListModel() const
+{
+    return m_configListModel.get();
 }
 
 bool MainWindowNew::runnigState() const
