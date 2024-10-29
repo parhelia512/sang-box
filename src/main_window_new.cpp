@@ -1,6 +1,9 @@
 #include "main_window_new.h"
 
 #include <QDebug>
+#include <QRegularExpression>
+
+#include "html_color_text.h"
 
 MainWindowNew::MainWindowNew(QObject *parent)
     : QObject{parent}
@@ -15,7 +18,7 @@ MainWindowNew::MainWindowNew(QObject *parent)
     connect(m_proxyManager.get(), &ProxyManager::proxyProcessStateChanged,
             this, &MainWindowNew::runningStateChanged);
     connect(m_proxyManager.get(), &ProxyManager::proxyProcessReadyReadStandardError,
-            this, &MainWindowNew::displayProxyOutput);
+            this, &MainWindowNew::updateProxyOutput);
 }
 
 ConfigListModel* MainWindowNew::configListModel() const
@@ -38,6 +41,11 @@ bool MainWindowNew::runnigState() const
     return m_proxyManager->proxyProcessState() == QProcess::Running;
 }
 
+QString MainWindowNew::proxyOutput() const
+{
+    return m_proxyOutput;
+}
+
 void MainWindowNew::changeSelectedConfig()
 {
     m_proxyManager->setConfigFilePath(m_configManager->configFilePath());
@@ -48,9 +56,21 @@ void MainWindowNew::changeSelectedConfig()
     }
 }
 
-void MainWindowNew::displayProxyOutput()
+void MainWindowNew::updateProxyOutput()
 {
     QByteArray outputData = m_proxyManager->readProxyProcessAllStandardError();
     QString outputText = QString::fromUtf8(outputData);
-    qDebug() << outputText;
+    if (outputText.isEmpty())
+        return;
+    HtmlColorText::appendHtmlColorText(outputText);
+
+    QRegularExpression re("\\n$");
+    QRegularExpressionMatch match = re.match(outputText);
+    if (match.hasMatch())
+    {
+        const auto endPos = match.capturedStart(0);
+        outputText = outputText.left(endPos);
+    }
+    m_proxyOutput += outputText + "<br/>";
+    emit proxyOutputChanged();
 }
