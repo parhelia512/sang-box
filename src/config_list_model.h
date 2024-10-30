@@ -27,10 +27,10 @@ public:
 
 public slots:
     void switchConfig(int index);
+    void deleteConfig(int index);
 
 private slots:
-    // need to rework signals in ConfigManager
-    void processChanges();
+    void processChanges(int index);
 
 private:
     QHash<int, QByteArray> roleNames() const override;
