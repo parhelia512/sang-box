@@ -178,6 +178,7 @@ void ConfigManager::updateConfigList(int index, const QString &filePath, const Q
         m_configList[index] = Config{filePath, name};
     }
     saveConfigToSettings();
+    emit configRenamed(index);
     emit configUpdated();
 }
 

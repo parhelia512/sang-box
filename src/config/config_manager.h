@@ -31,6 +31,7 @@ public:
 signals:
     void configUpdated();
     void configChanged();
+    void configRenamed(int index);
 
 private slots:
     void appendConfigList(const QString &filePath, const QString &name);
