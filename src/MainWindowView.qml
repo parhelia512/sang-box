@@ -11,36 +11,47 @@ Rectangle {
         Overview,
         Settings
     }
-
-    property int currentTabState: MainWindowView.TabState.Overview
-
+    
     enum WorkState {
         Start,
         Stop
     }
 
+    property int currentTabState: MainWindowView.TabState.Overview
     property int currentWorkState: MainWindowView.WorkState.Stop
 
-    // Второе окно (Overview)
+    property int tabWidth: 804
+    property int tabHeight: 705
+    property int tabTopLeftRadius: 100
+    property string tabColor: "#493855"
+
+    property int smallControlMenuSpacing: 100
+
+    property int fontSize: Size.pixel16
+
+    property int margin: 52
+
+    // Main tab Overview
     Rectangle {
-        width: 804
-        height: 705
+        width: root.tabWidth
+        height: root.tabHeight
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        color: "#493855"
-        topLeftRadius: 100
+        color: root.tabColor
+        topLeftRadius: root.tabTopLeftRadius
 
         visible: root.currentTabState === MainWindowView.TabState.Overview
 
         ColumnLayout {
-            width: 700
+            width: root.tabWidth - 104
 
             RowLayout {
-                Layout.leftMargin: 52
-                Layout.topMargin: 52
-                spacing: 100
+                Layout.leftMargin: root.margin
+                Layout.topMargin: root.margin
+                spacing: root.smallControlMenuSpacing
 
                 ControlMenu {
+                    id: profilesMenu
                     labelText: qsTr("Profiles")
                     labelLeftMargin: 23
 
@@ -52,7 +63,7 @@ Rectangle {
                         anchors.top: parent.label.bottom
                         anchors.topMargin: 16
                         anchors.right: parent.right
-                        anchors.rightMargin: 6
+                        anchors.rightMargin: 16
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 16
                         anchors.left: parent.left
@@ -71,6 +82,7 @@ Rectangle {
                                     implicitHeight: Size.pixel16
                                     label.color: "black"
                                     text: model.name
+                                    label.font.pixelSize: root.fontSize;
                                     checked: model.selected
                                     onClicked: {
                                         mainWindow.configListModel.switchConfig(index)
@@ -81,10 +93,45 @@ Rectangle {
                                     Layout.fillWidth: true
                                 }
 
-                                Rectangle {
-                                    width: 4
-                                    height: 16
-                                    color: "red"
+                                MButton {
+                                    accent: Theme.passive
+                                    type: MButton.Type.Text
+                                    text: ""
+                                    leftIcon.iconData: Icons.light.moreVert
+                                    leftIcon.size: Size.pixel20
+
+                                    onClicked: {
+                                        configMenu.popup()
+                                    }
+                                }
+
+                                Menu {
+                                    id: configMenu
+                                    implicitWidth: 120
+
+                                    MenuItem {
+                                        text: "Update"
+                                        font.pixelSize: root.fontSize;
+                                        iconData: Icons.light.download
+                                        icon.height: Size.pixel16
+                                        icon.width: Size.pixel16
+                                    }
+
+                                    MenuItem {
+                                        text: "Edit"
+                                        font.pixelSize: root.fontSize;
+                                        iconData: Icons.light.edit
+                                        icon.height: Size.pixel16
+                                        icon.width: Size.pixel16
+                                    }
+
+                                    MenuItem {
+                                        text: "Delete"
+                                        font.pixelSize: root.fontSize;
+                                        iconData: Icons.light.deleteElement
+                                        icon.height: Size.pixel16
+                                        icon.width: Size.pixel16
+                                    }
                                 }
                             }
                         }
@@ -105,8 +152,7 @@ Rectangle {
                 labelLeftMargin: 36
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: 300
-                Layout.leftMargin: 52
+                Layout.leftMargin: root.margin
                 Layout.topMargin: 23
                 verticalLineLeftMargin: 99.5
 
@@ -114,7 +160,7 @@ Rectangle {
                     accent: Theme.primary
                     text: qsTr("Auto Scroll")
                     label.color: "black"
-                    label.font.pixelSize: 16;
+                    label.font.pixelSize: root.fontSize;
                     size: Size.Grade.M
                     anchors.top: parent.top
                     anchors.topMargin: 5.5
@@ -142,23 +188,23 @@ Rectangle {
         }
     }
 
-    // Второе окно (Settings)
+    // Additional tab Settings
     Rectangle {
-        width: 804
-        height: 705
+        width: root.tabWidth
+        height: root.tabHeight
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        color: "#493855"
-        topLeftRadius: 100
-        visible: root.currentTabState === MainWindowView.TabState.Settings // Управляем видимостью второго окна
+        color: root.tabColor
+        topLeftRadius: root.tabTopLeftRadius
+        visible: root.currentTabState === MainWindowView.TabState.Settings
 
         ColumnLayout {
-            width: 700
+            width: root.tabWidth - 104
 
             RowLayout {
-                Layout.leftMargin: 52
-                Layout.topMargin: 52
-                spacing: 100
+                Layout.leftMargin: root.margin
+                Layout.topMargin: root.margin
+                spacing: root.smallControlMenuSpacing
 
                 ControlMenu {
                     labelText: qsTr("Settings")
@@ -168,13 +214,10 @@ Rectangle {
 
                     ColumnLayout {
                         anchors.top: parent.horizontalLine.bottom
-                        anchors.topMargin: 15
                         anchors.right: parent.right
-                        anchors.rightMargin: 15
-                        anchors.left: parent.left
-                        anchors.leftMargin: 15
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 15
+                        anchors.left: parent.left
+                        anchors.margins: 16
 
                         spacing: 15
 
@@ -260,8 +303,7 @@ Rectangle {
                 labelLeftMargin: 10
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: 300
-                Layout.leftMargin: 52
+                Layout.leftMargin: root.margin
                 Layout.topMargin: 23
                 verticalLineLeftMargin: 132.5
 
@@ -269,7 +311,7 @@ Rectangle {
                     accent: Theme.primary
                     text: qsTr("Blacklist")
                     label.color: "black"
-                    label.font.pixelSize: 16;
+                    label.font.pixelSize: root.fontSize;
                     size: Size.Grade.M
                     anchors.left: parent.verticalLine.right
                     anchors.top: parent.top
@@ -314,15 +356,15 @@ Rectangle {
                         Theme.primary :
                         Theme.secondary
             radius: 28
-            Layout.preferredWidth: 80
-            Layout.preferredHeight: 80
+            Layout.preferredWidth: 96
+            Layout.preferredHeight: 96
             Layout.topMargin: 209
             Layout.alignment: Qt.AlignHCenter
 
             leftIcon.iconData: mainWindow.runnigState ?
                                    Icons.light.pause :
                                    Icons.light.playArrow
-            leftIcon.size: Size.pixel64
+            leftIcon.size: Size.pixel36
 
             onClicked: {
                 mainWindow.runnigState ?
