@@ -48,11 +48,21 @@ QString MainWindowNew::proxyOutput() const
 
 void MainWindowNew::changeSelectedConfig()
 {
-    m_proxyManager->setConfigFilePath(m_configManager->configFilePath());
-    if (runnigState())
+    if (m_configManager->configCount() == 0)
     {
-        stopProxy();
-        startProxy();
+        if (m_proxyManager->proxyProcessState() == QProcess::Running)
+        {
+            stopProxy();
+        }
+    }
+    else
+    {
+        m_proxyManager->setConfigFilePath(m_configManager->configFilePath());
+        if (runnigState())
+        {
+            stopProxy();
+            startProxy();
+        }
     }
 }
 
