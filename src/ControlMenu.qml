@@ -5,15 +5,13 @@ import MMaterial
 
 Rectangle {
     id: root
-    color: menuColor
     radius: 12
 
     Layout.preferredWidth: 300
     Layout.preferredHeight: 300
 
-    property color menuColor: "#FABA94"
-
-    property color lineColor: "#552D11"
+    property color labelColor
+    property color lineColor
     property int lineHeight: 30
     property int lineThickness: 1
 
@@ -50,6 +48,7 @@ Rectangle {
 
     Label {
         id: label
+        color: root.labelColor
         property string labelText: qsTr("Profiles")
         text: labelText
         font.pixelSize: 16;
