@@ -5,11 +5,13 @@ import MMaterial
 
 Rectangle {
     id: root
-    color: "#FABA94"
+    color: menuColor
     radius: 12
 
     Layout.preferredWidth: 300
     Layout.preferredHeight: 300
+
+    property color menuColor: "#FABA94"
 
     property color lineColor: "#552D11"
     property int lineHeight: 30
