@@ -25,6 +25,10 @@ Rectangle {
     property int tabTopLeftRadius: 100
     property string tabColor: "#493855"
 
+    property color controlMenuColor: "#B37F8C"
+    property color lineColor: "#401C03"
+    property color fontColor: "#401C03"
+
     property int smallControlMenuSpacing: 100
 
     property int fontSize: Size.pixel16
@@ -52,8 +56,13 @@ Rectangle {
 
                 ControlMenu {
                     id: profilesMenu
+                    color: root.controlMenuColor
+
+                    labelColor: root.fontColor
                     labelText: qsTr("Profiles")
                     labelLeftMargin: 23
+
+                    lineColor: root.lineColor
 
                     Layout.alignment: Qt.AlignLeft
 
@@ -68,11 +77,13 @@ Rectangle {
                         anchors.bottomMargin: 16
                         anchors.left: parent.left
                         anchors.leftMargin: 16
+                        spacing: 15
 
                         ListView {
+                            id: profilesList
+
                             anchors.fill: parent
                             model: mainWindow.configListModel
-                            spacing: 15
 
                             delegate: RowLayout {
                                 width: parent.width
@@ -80,7 +91,7 @@ Rectangle {
                                 MRadioButton {
                                     accent: Theme.primary
                                     implicitHeight: Size.pixel16
-                                    label.color: "black"
+                                    label.color: root.fontColor
                                     text: model.name
                                     label.font.pixelSize: root.fontSize;
                                     checked: model.selected
@@ -99,6 +110,9 @@ Rectangle {
                                     text: ""
                                     leftIcon.iconData: Icons.light.moreVert
                                     leftIcon.size: Size.pixel20
+                                    implicitHeight: 40
+                                    implicitWidth: 40
+                                    radius: 100
 
                                     onClicked: {
                                         configMenu.popup()
@@ -108,9 +122,10 @@ Rectangle {
                                 Menu {
                                     id: configMenu
                                     implicitWidth: 120
+                                    implicitHeight: 120
 
                                     MenuItem {
-                                        text: "Update"
+                                        text: qsTr("Update")
                                         font.pixelSize: root.fontSize;
                                         iconData: Icons.light.download
                                         icon.height: Size.pixel16
@@ -118,7 +133,7 @@ Rectangle {
                                     }
 
                                     MenuItem {
-                                        text: "Edit"
+                                        text: qsTr("Edit")
                                         font.pixelSize: root.fontSize;
                                         iconData: Icons.light.edit
                                         icon.height: Size.pixel16
@@ -126,7 +141,7 @@ Rectangle {
                                     }
 
                                     MenuItem {
-                                        text: "Delete"
+                                        text: qsTr("Delete")
                                         font.pixelSize: root.fontSize;
                                         iconData: Icons.light.deleteElement
                                         icon.height: Size.pixel16
@@ -140,16 +155,26 @@ Rectangle {
 
 
                 ControlMenu {
+                    color: root.controlMenuColor
+
+                    labelColor: root.fontColor
                     labelText: qsTr("Stats")
                     labelLeftMargin: 31
+
+                    lineColor: root.lineColor
 
                     Layout.alignment: Qt.AlignRight
                 }
             }
 
             ControlMenu {
+                color: root.controlMenuColor
+
+                labelColor: root.fontColor
                 labelText: qsTr("Log")
                 labelLeftMargin: 36
+
+                lineColor: root.lineColor
 
                 Layout.fillWidth: true
                 Layout.leftMargin: root.margin
@@ -159,7 +184,7 @@ Rectangle {
                 MSwitch {
                     accent: Theme.primary
                     text: qsTr("Auto Scroll")
-                    label.color: "black"
+                    label.color: root.fontColor
                     label.font.pixelSize: root.fontSize;
                     size: Size.Grade.M
                     anchors.top: parent.top
@@ -207,8 +232,13 @@ Rectangle {
                 spacing: root.smallControlMenuSpacing
 
                 ControlMenu {
+                    color: root.controlMenuColor
+
+                    labelColor: root.fontColor
                     labelText: qsTr("Settings")
                     labelLeftMargin: 20
+
+                    lineColor: root.lineColor
 
                     Layout.alignment: Qt.AlignLeft
 
@@ -290,7 +320,13 @@ Rectangle {
 
 
                 ControlMenu {
+                    color: root.controlMenuColor
+
+                    labelColor: root.fontColor
                     labelText: qsTr("Proxied apps")
+
+                    lineColor: root.lineColor
+
                     labelLeftMargin: 10
                     verticalLineLeftMargin: 114.5
 
@@ -299,8 +335,13 @@ Rectangle {
             }
 
             ControlMenu {
+                color: root.controlMenuColor
+
+                labelColor: root.fontColor
                 labelText: qsTr("Domain routing")
                 labelLeftMargin: 10
+
+                lineColor: root.lineColor
 
                 Layout.fillWidth: true
                 Layout.leftMargin: root.margin
@@ -310,7 +351,7 @@ Rectangle {
                 MSwitch {
                     accent: Theme.primary
                     text: qsTr("Blacklist")
-                    label.color: "black"
+                    label.color: root.fontColor
                     label.font.pixelSize: root.fontSize;
                     size: Size.Grade.M
                     anchors.left: parent.verticalLine.right
