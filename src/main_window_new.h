@@ -24,6 +24,8 @@ class MainWindowNew : public QObject
 public:
     explicit MainWindowNew(QObject *parent = nullptr);
 
+    bool runnigState() const;
+
 public slots:
     void startProxy();
     void stopProxy();
@@ -35,7 +37,6 @@ signals:
 
 private:
     ConfigListModel* configListModel() const;
-    bool runnigState() const;
     QString proxyOutput() const;
 
 private slots:

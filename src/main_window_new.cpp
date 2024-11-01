@@ -21,6 +21,11 @@ MainWindowNew::MainWindowNew(QObject *parent)
             this, &MainWindowNew::updateProxyOutput);
 }
 
+bool MainWindowNew::runnigState() const
+{
+    return m_proxyManager->proxyProcessState() == QProcess::Running;
+}
+
 void MainWindowNew::startProxy()
 {
     m_proxyManager->startProxy();
@@ -34,11 +39,6 @@ void MainWindowNew::stopProxy()
 ConfigListModel* MainWindowNew::configListModel() const
 {
     return m_configListModel.get();
-}
-
-bool MainWindowNew::runnigState() const
-{
-    return m_proxyManager->proxyProcessState() == QProcess::Running;
 }
 
 QString MainWindowNew::proxyOutput() const
