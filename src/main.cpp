@@ -81,6 +81,11 @@ int main(int argc, char *argv[])
                      mainWindow.get(), &MainWindowNew::startProxy);
     QObject::connect(trayIcon.get(), &TrayIcon::disableProxyActionTriggered,
                      mainWindow.get(), &MainWindowNew::stopProxy);
+    QObject::connect(mainWindow.get(), &MainWindowNew::runningStateChanged,
+                     trayIcon.get(), [&mainWindow, &trayIcon]()
+                     {
+                         trayIcon->setMenuEnabled(mainWindow->runnigState());
+                     });
     trayIcon->show();
 
     QQmlApplicationEngine engine;
