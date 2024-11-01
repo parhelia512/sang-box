@@ -17,4 +17,21 @@ Window {
 	MainWindowView {
 		anchors.fill: parent
 	}
+
+    Connections {
+        target: trayIcon
+
+        function onOpenWindowTriggered() {
+            show()
+        }
+
+        function onRestoreActionTriggered() {
+            show()
+        }
+    }
+
+    onClosing: function(close) {
+        close.accepted = false
+        hide()
+    }
 }

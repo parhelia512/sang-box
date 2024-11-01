@@ -1,5 +1,6 @@
 #include "main_window.h"
 #include "main_window_new.h"
+#include "tray_icon.h"
 
 #define USE_WIDGETS 0
 
@@ -72,7 +73,16 @@ int main(int argc, char *argv[])
     }
 #else
     using MainWindowUPtr = std::unique_ptr<MainWindowNew>;
+    using TrayIconUPtr = std::unique_ptr<TrayIcon>;
+
     MainWindowUPtr mainWindow = std::make_unique<MainWindowNew>();
+    TrayIconUPtr trayIcon = std::make_unique<TrayIcon>();
+    QObject::connect(trayIcon.get(), &TrayIcon::enableProxyActionTriggered,
+                     mainWindow.get(), &MainWindowNew::startProxy);
+    QObject::connect(trayIcon.get(), &TrayIcon::disableProxyActionTriggered,
+                     mainWindow.get(), &MainWindowNew::stopProxy);
+    trayIcon->show();
+
     QQmlApplicationEngine engine;
     QObject::connect(
         &engine,
@@ -82,6 +92,7 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
 
     engine.rootContext()->setContextProperty("mainWindow", mainWindow.get());
+    engine.rootContext()->setContextProperty("trayIcon", trayIcon.get());
 
     engine.loadFromModule("QSingBox", "Main");
 #endif
