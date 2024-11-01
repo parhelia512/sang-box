@@ -52,7 +52,7 @@ void TrayIcon::createAction()
     connect(m_quitAction, &QAction::triggered, qApp,
             &QCoreApplication::quit);
 
-    m_enableProxyAction = new QAction(tr("Enble proxy"), this);
+    m_enableProxyAction = new QAction(tr("Enable proxy"), this);
     connect(m_enableProxyAction, &QAction::triggered, this,
             &TrayIcon::enableProxyActionTriggered);
 
