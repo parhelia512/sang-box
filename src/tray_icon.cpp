@@ -13,7 +13,7 @@ TrayIcon::TrayIcon(QObject *parent)
 
     createTrayIcon();
     connect(m_trayIcon, &QSystemTrayIcon::activated, this,
-            &TrayIcon::iconActivated);
+            &TrayIcon::processActivated);
 }
 
 TrayIcon::~TrayIcon()
@@ -76,4 +76,17 @@ void TrayIcon::createTrayIcon()
     m_trayIcon->setIcon(icon);
     m_trayIcon->setToolTip("qsing-box");
     m_trayIcon->setContextMenu(m_trayIconMenu);
+}
+
+void TrayIcon::processActivated(int reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+    case QSystemTrayIcon::DoubleClick:
+    case QSystemTrayIcon::MiddleClick:
+        emit openWindowTriggered();
+        break;
+    default:
+        ;
+    }
 }

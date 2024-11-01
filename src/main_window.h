@@ -61,7 +61,7 @@ private slots:
     void changeProxy(int newState);
 
     // Click on the system tray, then execute this slot function
-    void showMainWindow(int reason);
+    void showMainWindow();
     void changeSelectedConfig();
 
 private:

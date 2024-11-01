@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_trayIcon.get(), &TrayIcon::disableProxyActionTriggered, this, &MainWindow::stopProxy);
     connect(m_trayIcon.get(), &TrayIcon::enableProxyActionTriggered, this, &MainWindow::startProxy);
     connect(m_trayIcon.get(), &TrayIcon::restoreActionTriggered, this, &QWidget::showNormal);
-    connect(m_trayIcon.get(), &TrayIcon::iconActivated, this, &MainWindow::showMainWindow);
+    connect(m_trayIcon.get(), &TrayIcon::openWindowTriggered, this, &MainWindow::showMainWindow);
     connect(this, &MainWindow::proxyChanged, m_trayIcon.get(), &TrayIcon::setMenuEnabled);
     m_trayIcon->show();
 }
@@ -213,17 +213,9 @@ void MainWindow::changeProxy(int newState)
     }
 }
 
-void MainWindow::showMainWindow(int reason)
+void MainWindow::showMainWindow()
 {
-    switch (reason) {
-    case QSystemTrayIcon::Trigger:
-    case QSystemTrayIcon::DoubleClick:
-    case QSystemTrayIcon::MiddleClick:
-        this->show();
-        break;
-    default:
-        ;
-    }
+    this->show();
 }
 
 void MainWindow::changeSelectedConfig()

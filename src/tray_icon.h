@@ -31,13 +31,16 @@ signals:
     void enableProxyActionTriggered();
     void disableProxyActionTriggered();
     void restoreActionTriggered();
-    // Notify the main window that the system tray was clicked
-    void iconActivated(int reason);
+    void openWindowTriggered();
 
 private:
     void createAction();
     void createTrayIcon();
 
+private slots:
+    void processActivated(int reason);
+
+private:
     // Action for creating the menu of system tray
     QAction *m_enableProxyAction;
     QAction *m_disableProxyAction;
