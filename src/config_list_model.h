@@ -28,6 +28,7 @@ public:
 public slots:
     void switchConfig(int index);
     void deleteConfig(int index);
+    void editConfig(int index);
 
 private slots:
     void processChanges(int index);

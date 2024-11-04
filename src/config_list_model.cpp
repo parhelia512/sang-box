@@ -68,6 +68,16 @@ void ConfigListModel::deleteConfig(int index)
     }
 }
 
+void ConfigListModel::editConfig(int index)
+{
+    if (index >= 0 && m_configManager->configCount() > 0)
+    {
+        m_configManager->editConfig(index);
+        const QModelIndex modelIndex = this->index(index, 0);
+        emit dataChanged(modelIndex, modelIndex);
+    }
+}
+
 void ConfigListModel::processChanges(int index)
 {
     const QModelIndex modelIndex = this->index(index, 0);
