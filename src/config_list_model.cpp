@@ -51,11 +51,13 @@ QModelIndex ConfigListModel::parent(const QModelIndex &child) const
 
 void ConfigListModel::switchConfig(int index)
 {
+    const QModelIndex prevModelIndex = this->index(m_configManager->configIndex(), 0);
     if (index >= 0) {
         m_configManager->switchConfig(index);
     }
     const QModelIndex modelIndex = this->index(index, 0);
-    emit dataChanged(modelIndex, modelIndex);
+    emit dataChanged(prevModelIndex, prevModelIndex, {SelectedRole});
+    emit dataChanged(modelIndex, modelIndex, {SelectedRole});
 }
 
 void ConfigListModel::deleteConfig(int index)
@@ -74,7 +76,7 @@ void ConfigListModel::editConfig(int index)
     {
         m_configManager->editConfig(index);
         const QModelIndex modelIndex = this->index(index, 0);
-        emit dataChanged(modelIndex, modelIndex);
+        emit dataChanged(modelIndex, modelIndex, {NameRole});
     }
 }
 
